@@ -2,4 +2,4 @@ FROM temporalio/ui:2.48.1
 
 ENV TEMPORAL_UI_PORT=8088
 
-ENTRYPOINT ["/bin/sh", "-c", "TEMPORAL_ADDRESS=$TEMPORAL_GRPC_HOST:7233 ./ui-server"]
+ENTRYPOINT ["/bin/sh", "-c", "TEMPORAL_ADDRESS=$TEMPORAL_GRPC_HOST:7233 ./ui-server start"]
