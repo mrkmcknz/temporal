@@ -4,7 +4,7 @@ databases:
   user: temporal
   plan: basic-256mb
   diskSizeGB: 1
-  region: oregon
+  region: frankfurt
 
 envVarGroups:
   - name: temporal-shared
@@ -24,8 +24,8 @@ services:
 - type: pserv
   name: temporal-elasticsearch
   autoDeploy: false
-  plan: Starter
-  region: oregon
+  plan: standard
+  region: frankfurt
   env: docker
   dockerfilePath: ./temporal-cluster/elasticsearch/Dockerfile
   disk:
@@ -36,7 +36,7 @@ services:
   - key: PORT
     value: 9200
   - key: ES_JAVA_OPTS
-    value: "-Xms100m -Xmx100m"
+    value: "-Xms512m -Xmx512m"
   - key: xpack.security.enabled
     value: true
   - key: ELASTIC_PASSWORD
@@ -54,15 +54,10 @@ services:
 - type: pserv
   name: temporal-frontend
   autoDeploy: false
-  plan: Starter
-  region: oregon
+  plan: standard
+  region: frankfurt
   env: docker
   dockerfilePath: ./temporal-cluster/server/auto-setup/Dockerfile
-  scaling:
-    minInstances: 1
-    maxInstances: 3
-    targetMemoryPercent: 80
-    targetCPUPercent: 80
   envVars:
   - fromGroup: temporal-shared
   - key: SERVICES
@@ -104,15 +99,10 @@ services:
 - type: pserv
   name: temporal-history
   autoDeploy: false
-  plan: Starter
-  region: oregon
+  plan: standard
+  region: frankfurt
   env: docker
   dockerfilePath: ./temporal-cluster/server/Dockerfile
-  scaling:
-    minInstances: 1
-    maxInstances: 3
-    targetMemoryPercent: 80
-    targetCPUPercent: 80
   envVars:
   - fromGroup: temporal-shared
   - key: SERVICES
@@ -151,15 +141,10 @@ services:
 - type: pserv
   name: temporal-matching
   autoDeploy: false
-  plan: Starter
-  region: oregon
+  plan: standard
+  region: frankfurt
   env: docker
   dockerfilePath: ./temporal-cluster/server/Dockerfile
-  scaling:
-    minInstances: 1
-    maxInstances: 3
-    targetMemoryPercent: 80
-    targetCPUPercent: 80
   envVars:
   - fromGroup: temporal-shared
   - key: SERVICES
@@ -198,15 +183,10 @@ services:
 - type: pserv
   autoDeploy: false
   name: temporal-worker
-  plan: Starter
-  region: oregon
+  plan: standard
+  region: frankfurt
   env: docker
   dockerfilePath: ./temporal-cluster/server/Dockerfile
-  scaling:
-    minInstances: 1
-    maxInstances: 3
-    targetMemoryPercent: 80
-    targetCPUPercent: 80
   envVars:
   - fromGroup: temporal-shared
   # The worker service needs to wait for the history service to be up first,
@@ -252,8 +232,8 @@ services:
 - type: pserv
   name: temporal-ui
   autoDeploy: false
-  plan: Starter
-  region: oregon
+  plan: standard
+  region: frankfurt
   env: docker
   dockerfilePath: ./temporal-cluster/web/Dockerfile
   envVars:
